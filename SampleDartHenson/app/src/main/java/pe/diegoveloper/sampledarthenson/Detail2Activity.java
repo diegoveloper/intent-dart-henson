@@ -3,7 +3,11 @@ package pe.diegoveloper.sampledarthenson;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.widget.TextView;
+
+import com.f2prateek.dart.Dart;
+import com.f2prateek.dart.InjectExtra;
 
 /**
  * Created by diegoveloper on 8/10/17.
@@ -11,30 +15,18 @@ import android.widget.TextView;
 
 public class Detail2Activity extends Activity{
 
-    public static final String PARAM_NAME = "name";
-    public static final String PARAM_LAST_NAME = "last_name";
-    public static final String PARAM_COUNTRY = "country";
+    @InjectExtra String name;
+    @InjectExtra String lastName;
 
-    String name;
-    String lastName;
-    String country = "";
+    @Nullable @InjectExtra String country = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail2);
-        getDataFromIntent(getIntent());
-    }
-
-    private void getDataFromIntent(Intent data){
-        name = data.getStringExtra(PARAM_NAME);
-        lastName = data.getStringExtra(PARAM_LAST_NAME);
-        if (data.hasExtra(PARAM_COUNTRY)){
-            country = data.getStringExtra(PARAM_COUNTRY);
-        }
+        Dart.inject(this);
         showInformation(name, lastName, country);
     }
-
     private void showInformation(String name, String lastName, String country){
         ((TextView)findViewById(R.id.name)).setText(name);
         ((TextView)findViewById(R.id.last_name)).setText(lastName);
